@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         itemsAdapter = new ItemsAdapter();
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         itemsAdapter.setItems(generateExpenses());
         itemsAdapter.addItems(generateIncomes());
     }
