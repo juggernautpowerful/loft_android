@@ -26,7 +26,7 @@
         android:layout_below="@id/name"
         android:textColor="@color/editText_name_textColor"
         android:hint="@string/editText_price_hint"
-        android:inputType="numberDecimal"/>
+        android:inputType="number"/>
     </LinearLayout>
 
     <Button
