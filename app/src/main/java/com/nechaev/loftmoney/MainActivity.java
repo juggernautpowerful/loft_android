@@ -43,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return new BudgetFragment();
+            if (position == 0){
+                return new BudgetFragment(true);
+            }
+            return new BudgetFragment(false);
         }
 
         @Override

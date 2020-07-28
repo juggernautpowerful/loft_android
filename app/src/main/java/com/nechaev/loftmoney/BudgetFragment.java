@@ -1,7 +1,6 @@
 package com.nechaev.loftmoney;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetFragment extends Fragment {
+
+    public BudgetFragment(Boolean isExpense) {
+        this.isExpense = isExpense;
+        if (isExpense){
+            this.color = R.color.expenseColor;
+        } else {
+            this.color = R.color.incomeColor;
+        }
+    }
 
     private static final int ADD_ITEM_ACTIVITY_REQUEST_CODE = 100;
     private ItemsAdapter mAdapter;
@@ -61,7 +69,7 @@ public class BudgetFragment extends Fragment {
             price = 0;
         }
         if (requestCode == ADD_ITEM_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            mAdapter.addItem(new Item(data.getStringExtra("name"), price, R.color.expenseColor));
+            mAdapter.addItem(new Item(data.getStringExtra("name"), price, color));
         }
     }
 
