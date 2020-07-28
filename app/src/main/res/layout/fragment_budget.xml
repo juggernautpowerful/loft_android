@@ -16,7 +16,7 @@
 
     <Button
         android:id="@+id/call_add_item_activity"
-        android:text="@string/add_button_title"
+        android:text="@string/call_add_item_activity_title"
         android:layout_gravity="bottom|end"
         android:layout_width="56dp"
         android:layout_height="56dp"

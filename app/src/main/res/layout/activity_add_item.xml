@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="33dp"
-        android:layout_marginRight="104dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginEnd="104dp"
         android:layout_marginTop="127dp"
         >
     <EditText
@@ -18,15 +18,16 @@
         android:layout_height="wrap_content"
         android:hint="@string/editText_name_hint"
         android:textColor="@color/editText_name_textColor"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:autofillHints="no"/>
     <EditText
         android:id="@+id/price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
         android:textColor="@color/editText_name_textColor"
         android:hint="@string/editText_price_hint"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:autofillHints="no" />
     </LinearLayout>
 
     <Button
@@ -37,8 +38,8 @@
         android:background="@null"
         android:textColor="@color/add_btn_textColor"
         android:layout_marginTop="68dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginRight="112dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginEnd="112dp"
         />
 
 </LinearLayout>

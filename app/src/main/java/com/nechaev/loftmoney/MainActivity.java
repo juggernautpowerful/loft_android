@@ -1,44 +1,54 @@
 package com.nechaev.loftmoney;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    ItemsAdapter itemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.costsRecyclerView);
-        itemsAdapter = new ItemsAdapter();
-        recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
-        itemsAdapter.setItems(generateExpenses());
-        itemsAdapter.addItems(generateIncomes());
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.add(R.id.fragment_container, new BudgetFragment());
+//        transaction.commit();
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.expences));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.income));
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(new BudgetPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText(R.string.expences);
+        tabLayout.getTabAt(1).setText(R.string.income);
     }
 
-    private List<Item> generateExpenses(){
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Молоко", 70, R.color.expenseColor));
-        items.add(new Item("Зубная щетка", 70, R.color.expenseColor));
-        items.add(new Item("Сковородка с антипригарным покрытием", 1670, R.color.expenseColor));
-        return items;
-    }
+    static class BudgetPagerAdapter extends FragmentPagerAdapter {
 
-    private List<Item> generateIncomes(){
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Зарплата. Июнь", 70000, R.color.incomeColor));
-        items.add(new Item("Премия", 7000, R.color.incomeColor));
-        items.add(new Item("Олег наконец-то вернул долг", 300000, R.color.incomeColor));
-        return items;
+        public BudgetPagerAdapter(@NonNull final FragmentManager fm, final int behavior) {
+            super(fm, behavior);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return new BudgetFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 }

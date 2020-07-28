@@ -2,7 +2,10 @@
     <string name="app_name">ЛофтДеньги</string>
     <string name="editText_name_hint">Название</string>
     <string name="editText_price_hint">Цена</string>
-    <string name="add_button_title">+</string>
+    <string name="add_button_title">Добавить</string>
 
     <string name="price_with_currency">%1$s "\u20BD"</string>
+    <string name="call_add_item_activity_title">+</string>
+    <string name="expences">Расходы</string>
+    <string name="income">Доходы</string>
 </resources>

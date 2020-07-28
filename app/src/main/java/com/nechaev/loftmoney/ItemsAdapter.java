@@ -31,6 +31,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         holder.bindItem(itemList.get(position));
     }
 
+    public void addItem(Item item) {
+        this.itemList.add(item);
+        notifyDataSetChanged();
+    }
     public void setItems(List<Item> items) {
         this.itemList.clear();
         this.itemList.addAll(items);
@@ -48,21 +52,19 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView moneyNameView;
-        private TextView moneyPriceView;
+        private TextView mNameView;
+        private TextView mPriceView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            moneyNameView = itemView.findViewById(R.id.nameView);
-            moneyPriceView = itemView.findViewById(R.id.priceView);
+            mNameView = itemView.findViewById(R.id.nameView);
+            mPriceView = itemView.findViewById(R.id.priceView);
         }
 
         public void bindItem(Item item) {
-            moneyNameView.setText(item.getName());
-            moneyPriceView.setText(
-                    moneyPriceView.getContext().getResources().getString(R.string.price_with_currency, String.valueOf(item.getPrice()))
-            );
-            moneyPriceView.setTextColor(ContextCompat.getColor(moneyPriceView.getContext(), item.getColor()));
+            mNameView.setText(item.getName());
+            mPriceView.setText(mPriceView.getContext().getResources().getString(R.string.price_with_currency, String.valueOf(item.getPrice())));
+            mPriceView.setTextColor(ContextCompat.getColor(mPriceView.getContext(), item.getColor()));
         }
     }
 }
