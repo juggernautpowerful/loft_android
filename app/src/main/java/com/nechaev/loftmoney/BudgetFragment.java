@@ -52,9 +52,11 @@ public class BudgetFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-        mAdapter.setItems(generateExpenses());
-        //mAdapter.addItems(generateIncomes());
-
+        if (this.isExpense ){
+            mAdapter.addItems(generateExpenses());
+        } else {
+            mAdapter.addItems(generateIncomes());
+        }
         return view;
     }
 
@@ -75,17 +77,17 @@ public class BudgetFragment extends Fragment {
 
     private List<Item> generateExpenses(){
         List<Item> items = new ArrayList<>();
-        items.add(new Item("Молоко", 70, R.color.expenseColor));
-        items.add(new Item("Зубная щетка", 70, R.color.expenseColor));
-        items.add(new Item("Сковородка с антипригарным покрытием", 1670, R.color.expenseColor));
+        items.add(new Item("Молоко", 70, this.color));
+        items.add(new Item("Зубная щетка", 70, this.color));
+        items.add(new Item("Сковородка с антипригарным покрытием", 1670, this.color));
         return items;
     }
 
     private List<Item> generateIncomes(){
         List<Item> items = new ArrayList<>();
-        items.add(new Item("Зарплата. Июнь", 70000, R.color.incomeColor));
-        items.add(new Item("Премия", 7000, R.color.incomeColor));
-        items.add(new Item("Олег наконец-то вернул долг", 300000, R.color.incomeColor));
+        items.add(new Item("Зарплата. Июнь", 70000, this.color));
+        items.add(new Item("Премия", 7000, this.color));
+        items.add(new Item("Олег наконец-то вернул долг", 300000, this.color));
         return items;
     }
 }
