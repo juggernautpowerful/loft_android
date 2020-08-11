@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +27,7 @@ public class BudgetFragment extends Fragment {
         }
     }
 
-    private static final int ADD_ITEM_ACTIVITY_REQUEST_CODE = 100;
+    public static final int ADD_ITEM_ACTIVITY_REQUEST_CODE = 100;
     private ItemsAdapter mAdapter;
     private Integer color = R.color.expenseColor;
     private Boolean isExpense = true;
@@ -37,14 +36,14 @@ public class BudgetFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_budget, null);
-        Button callAddButton = view.findViewById(R.id.call_add_item_activity);
-        callAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                startActivityForResult(new Intent(getActivity(), AddItemActivity.class),
-                        ADD_ITEM_ACTIVITY_REQUEST_CODE);
-            }
-        });
+//        Button callAddButton = view.findViewById(R.id.call_add_item_activity);
+//        callAddButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                startActivityForResult(new Intent(getActivity(), AddItemActivity.class),
+//                        ADD_ITEM_ACTIVITY_REQUEST_CODE);
+//            }
+//        });
 
         RecyclerView recyclerView = view.findViewById(R.id.budget_item_list);
 

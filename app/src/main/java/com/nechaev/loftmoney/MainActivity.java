@@ -1,16 +1,17 @@
 package com.nechaev.loftmoney;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Bundle;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,15 +20,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.add(R.id.fragment_container, new BudgetFragment());
-//        transaction.commit();
-
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.expences));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.income));
-        ViewPager viewPager = findViewById(R.id.viewpager);
+        final ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new BudgetPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+
+        FloatingActionButton addItemBtn = findViewById(R.id.call_add_item_activity);
+        addItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final int activeFragmentIndex = viewPager.getCurrentItem();
+                Fragment activeFragment = getSupportFragmentManager().getFragments().get(activeFragmentIndex);
+                activeFragment.startActivityForResult(new Intent(MainActivity.this, AddItemActivity.class),
+                        BudgetFragment.ADD_ITEM_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText(R.string.expences);
