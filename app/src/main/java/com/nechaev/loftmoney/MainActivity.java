@@ -32,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 final int activeFragmentIndex = viewPager.getCurrentItem();
                 Fragment activeFragment = getSupportFragmentManager().getFragments().get(activeFragmentIndex);
-                activeFragment.startActivityForResult(new Intent(MainActivity.this, AddItemActivity.class),
+
+                Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+
+                intent.putExtra("type", activeFragmentIndex == 0 ? "expense": "income");
+
+                activeFragment.startActivityForResult(intent,
                         BudgetFragment.ADD_ITEM_ACTIVITY_REQUEST_CODE);
             }
         });

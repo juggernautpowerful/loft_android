@@ -3,6 +3,8 @@ package com.nechaev.loftmoney;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class BudgetFragment extends Fragment {
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public BudgetFragment(Boolean isExpense) {
         this.isExpense = isExpense;
@@ -36,26 +47,14 @@ public class BudgetFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_budget, null);
-//        Button callAddButton = view.findViewById(R.id.call_add_item_activity);
-//        callAddButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(final View v) {
-//                startActivityForResult(new Intent(getActivity(), AddItemActivity.class),
-//                        ADD_ITEM_ACTIVITY_REQUEST_CODE);
-//            }
-//        });
-
         RecyclerView recyclerView = view.findViewById(R.id.budget_item_list);
 
         mAdapter = new ItemsAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-        if (this.isExpense ){
-            mAdapter.addItems(generateExpenses());
-        } else {
-            mAdapter.addItems(generateIncomes());
-        }
+
+        loadItems();
         return view;
     }
 
@@ -70,23 +69,38 @@ public class BudgetFragment extends Fragment {
             price = 0;
         }
         if (requestCode == ADD_ITEM_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            mAdapter.addItem(new Item(data.getStringExtra("name"), price, color));
+            loadItems();
         }
     }
 
-    private List<Item> generateExpenses(){
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Молоко", 70, this.color));
-        items.add(new Item("Зубная щетка", 70, this.color));
-        items.add(new Item("Сковородка с антипригарным покрытием", 1670, this.color));
-        return items;
-    }
+    private void loadItems(){
+        final List<Item> items = new ArrayList<>();
+        Single<MoneyResponse> singleItems;
+        if (this.isExpense) {
+            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems("expense");
+        } else {
+            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems("income");
+        }
 
-    private List<Item> generateIncomes(){
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Зарплата. Июнь", 70000, this.color));
-        items.add(new Item("Премия", 7000, this.color));
-        items.add(new Item("Олег наконец-то вернул долг", 300000, this.color));
-        return items;
+        mAdapter.clear();
+
+        Disposable disposable = singleItems
+                .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MoneyResponse>() {
+                    @Override
+                    public void accept(MoneyResponse moneyResponse) throws Exception {
+                        for (MoneyItem moneyItem: moneyResponse.getMoneyItems()){
+                            items.add(Item.getInstance(moneyItem));
+                        }
+                        mAdapter.addItems(items);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("TAG", "Error " + throwable);
+                    }
+                });
+
+        compositeDisposable.add(disposable);
     }
 }

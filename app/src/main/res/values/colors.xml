@@ -9,4 +9,5 @@
     <color name="textColorPrimary">#666664</color>
     <color name="expenseColor">#4a90e2</color>
     <color name="incomeColor">#7ed321</color>
+    <color name="inactiveColor">#eaeaea</color>
 </resources>

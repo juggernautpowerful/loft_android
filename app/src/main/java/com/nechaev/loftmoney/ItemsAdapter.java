@@ -51,6 +51,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return itemList.size();
     }
 
+    public void clear() {
+        itemList.clear();
+    }
+
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mNameView;
         private TextView mPriceView;

@@ -11,6 +11,12 @@ public class Item {
         this.color = color;
     }
 
+    public static Item getInstance(MoneyItem moneyItem){
+        return new Item(moneyItem.getName(),
+                moneyItem.getPrice(),
+                moneyItem.getType().equals("expense")? R.color.expenseColor: R.color.incomeColor);
+    }
+
     public String getName() {
         return name;
     }
