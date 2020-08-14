@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText(R.string.expences);
         tabLayout.getTabAt(1).setText(R.string.income);
+        tabLayout.getTabAt(2).setText(R.string.balance);
     }
 
     @Override
@@ -81,13 +82,15 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             if (position == 0){
                 return new BudgetFragment(true);
-            }
+            }if (position == 1){
             return new BudgetFragment(false);
+            }
+            return new BalanceFragment();
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 }

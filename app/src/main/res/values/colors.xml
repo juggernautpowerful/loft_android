@@ -13,4 +13,7 @@
     <color name="white">#FFFFFF</color>
     <color name="dark_gray_blue">#333f59</color>
     <color name="itemSelected">#a2f2f2</color>
+    <color name="pale_orange">#ff9e57</color>
+    <color name="apple_green">#7ed321</color>
+    <color name="medium_grey">#8baaef</color>
 </resources>

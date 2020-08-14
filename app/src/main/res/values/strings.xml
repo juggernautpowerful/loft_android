@@ -13,5 +13,9 @@
     <string name="selected">Выделено: %1$s</string>
     <string name="delete_item">Удалить</string>
     <string name="confirmation">Вы уверены что хотите удалить?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="balance">Баланс</string>
+    <string name="finances">Доступный баланс</string>
 
 </resources>
