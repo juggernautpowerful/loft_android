@@ -1,18 +1,20 @@
 package com.nechaev.loftmoney;
 
 public class Item {
+    private Integer id;
     private String name;
     private Integer price;
     private Integer color;
 
-    public Item(String name, Integer price, Integer color) {
+    public Item(Integer id, String name, Integer price, Integer color) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.color = color;
     }
 
     public static Item getInstance(MoneyItem moneyItem){
-        return new Item(moneyItem.getName(),
+        return new Item(moneyItem.getItemId(), moneyItem.getName(),
                 moneyItem.getPrice(),
                 moneyItem.getType().equals("expense")? R.color.expenseColor: R.color.incomeColor);
     }
@@ -26,4 +28,8 @@ public class Item {
     }
 
     public Integer getColor() { return color; }
+
+    public Integer getId() {
+        return id;
+    }
 }

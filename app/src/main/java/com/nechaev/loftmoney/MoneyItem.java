@@ -3,14 +3,13 @@ package com.nechaev.loftmoney;
 import com.google.gson.annotations.SerializedName;
 
 public class MoneyItem {
-    @SerializedName
-   ("id") private String itemId;
+    @SerializedName("id") private int itemId;
     private String name;
     private int price;
     private String type;
     private String date;
 
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 

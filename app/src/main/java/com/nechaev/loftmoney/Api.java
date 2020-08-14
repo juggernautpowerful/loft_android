@@ -19,6 +19,9 @@ public interface Api {
     @POST("./items/add")
     @FormUrlEncoded
     Completable addMoney(@Query("auth-token") String token, @Field("price") String price,@Field("name") String name, @Field("type") String type);
+
+    @POST("./items/remove")
+    Call<Status> removeItem(@Query("id") String id, @Query("auth-token") String token);
 //    @GET("auth")
 //    Call<Status> auth(@Query("social_user_id") String userId);
 //

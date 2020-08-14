@@ -2,10 +2,14 @@ package com.nechaev.loftmoney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.View;
+import androidx.appcompat.widget.Toolbar;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -15,12 +19,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+    TabLayout tabLayout;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
+        toolbar = findViewById(R.id.toolbar);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.expences));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.income));
         final ViewPager viewPager = findViewById(R.id.viewpager);
@@ -45,6 +52,22 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText(R.string.expences);
         tabLayout.getTabAt(1).setText(R.string.income);
+    }
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        super.onActionModeStarted(mode);
+
+        tabLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.dark_gray_blue));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.dark_gray_blue));
+    }
+
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+
+        tabLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
     }
 
     static class BudgetPagerAdapter extends FragmentPagerAdapter {

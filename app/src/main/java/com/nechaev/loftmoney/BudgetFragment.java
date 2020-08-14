@@ -1,11 +1,18 @@
 package com.nechaev.loftmoney;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,8 +34,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class BudgetFragment extends Fragment {
+public class BudgetFragment extends Fragment implements  ItemsSelectionListener, ActionMode.Callback{
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public BudgetFragment(Boolean isExpense) {
@@ -44,6 +54,7 @@ public class BudgetFragment extends Fragment {
     private ItemsAdapter mAdapter;
     private Integer color = R.color.expenseColor;
     private Boolean isExpense = true;
+    private ActionMode mActionMode;
 
     private SwipeRefreshLayout refresh;
 
@@ -60,6 +71,7 @@ public class BudgetFragment extends Fragment {
             }
         });
         mAdapter = new ItemsAdapter();
+        mAdapter.setListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
@@ -81,6 +93,91 @@ public class BudgetFragment extends Fragment {
         if (requestCode == ADD_ITEM_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             loadItems();
         }
+    }
+
+    @Override
+    public void onItemClicked(Item selectedItem, int position) {
+        mAdapter.clearItem(position);
+        if (mActionMode != null) {
+            mActionMode.setTitle(getString(R.string.selected, String.valueOf(mAdapter.getSelectedSize())));
+        }
+    }
+
+    @Override
+    public void onItemLongClicked(Item selectedItem, int position) {
+        if (mActionMode == null) {
+            getActivity().startActionMode(this);
+        }
+        mAdapter.toggleItem(position);
+        if (mActionMode != null) {
+            mActionMode.setTitle(getString(R.string.selected, String.valueOf(mAdapter.getSelectedSize())));
+        }
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+        mActionMode = actionMode;
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+        MenuInflater menuInf = new MenuInflater(getActivity());
+        menuInf.inflate(R.menu.delete_menu, menu);
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.deleteItems) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.confirmation)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+                            removeItems();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+
+                        }
+                    }).show();
+        }
+        return true;
+    }
+
+    private void removeItems() {
+        String token = ((LoftApp) getActivity().getApplication()).getSharedPreferences(getString(R.string.app_name), 0).getString(LoftApp.TOKEN_KEY, "");
+        List<Integer> selectedItems = mAdapter.getSelectedItemIds();
+        for (Integer itemId : selectedItems) {
+            Call<Status> call = ((LoftApp) getActivity().getApplication()).getApi().removeItem(String.valueOf(itemId.intValue()), token);
+            call.enqueue(new Callback<Status>() {
+
+                @Override
+                public void onResponse(
+                        final Call<Status> call, final Response<Status> response
+                ) {
+                    loadItems();
+                    mAdapter.clearSelections();
+                    mActionMode.setTitle(getString(R.string.selected, String.valueOf(mAdapter.getSelectedSize())));
+                }
+
+                @Override
+                public void onFailure(final Call<Status> call, final Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        mActionMode = null;
+        mAdapter.clearSelections();
     }
 
     private void loadItems(){
