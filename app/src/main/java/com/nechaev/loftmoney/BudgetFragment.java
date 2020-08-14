@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +45,20 @@ public class BudgetFragment extends Fragment {
     private Integer color = R.color.expenseColor;
     private Boolean isExpense = true;
 
+    private SwipeRefreshLayout refresh;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_budget, null);
         RecyclerView recyclerView = view.findViewById(R.id.budget_item_list);
-
+        refresh = view.findViewById(R.id.swipe_refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
         mAdapter = new ItemsAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -75,21 +85,26 @@ public class BudgetFragment extends Fragment {
 
     private void loadItems(){
         final List<Item> items = new ArrayList<>();
-        Single<MoneyResponse> singleItems;
+        Single<List<MoneyItem>> singleItems;
+
+        String token =  ((LoftApp) getActivity().getApplication()).getSharedPreferences(getString(R.string.app_name), 0).getString(LoftApp.TOKEN_KEY, "");
+
         if (this.isExpense) {
-            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems("expense");
+            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"expense");
         } else {
-            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems("income");
+            singleItems  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"income");
         }
 
         mAdapter.clear();
 
         Disposable disposable = singleItems
                 .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<MoneyResponse>() {
+                .subscribe(new Consumer<List<MoneyItem>>() {
                     @Override
-                    public void accept(MoneyResponse moneyResponse) throws Exception {
-                        for (MoneyItem moneyItem: moneyResponse.getMoneyItems()){
+                    public void accept(List<MoneyItem> moneyResponse) throws Exception {
+                        refresh.setRefreshing(false);
+                        Log.e("TAG", "Refreshing ");
+                        for (MoneyItem moneyItem: moneyResponse){
                             items.add(Item.getInstance(moneyItem));
                         }
                         mAdapter.addItems(items);
@@ -97,6 +112,7 @@ public class BudgetFragment extends Fragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        refresh.setRefreshing(false);
                         Log.e("TAG", "Error " + throwable);
                     }
                 });

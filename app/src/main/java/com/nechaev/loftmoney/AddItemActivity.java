@@ -63,8 +63,8 @@ public class AddItemActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 final String name = mNameEditText.getText().toString();
                 String price = mPriceEditText.getText().toString();
-
-                ((LoftApp)getApplication()).getApi().addMoney(price, name, type)
+                String token =  ((LoftApp) getApplication()).getSharedPreferences(getString(R.string.app_name), 0).getString(LoftApp.TOKEN_KEY, "");
+                ((LoftApp)getApplication()).getApi().addMoney(token, price, name, type)
                         .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action() {
                             @Override

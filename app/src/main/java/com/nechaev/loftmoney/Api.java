@@ -14,11 +14,11 @@ import retrofit2.http.Query;
 
 public interface Api {
     @GET("./items")
-    Single<MoneyResponse> getItems(@Query("type") String type);
+    Single<List<MoneyItem>> getItems(@Query("auth-token") String token, @Query("type") String type);
 
     @POST("./items/add")
     @FormUrlEncoded
-    Completable addMoney(@Field("price") String price,@Field("name") String name, @Field("type") String type);
+    Completable addMoney(@Query("auth-token") String token, @Field("price") String price,@Field("name") String name, @Field("type") String type);
 //    @GET("auth")
 //    Call<Status> auth(@Query("social_user_id") String userId);
 //

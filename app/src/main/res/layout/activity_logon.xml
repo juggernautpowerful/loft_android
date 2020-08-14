@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".LogonActivity">
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="174dp"
+        android:layout_height="153dp"
+        android:layout_gravity="center"
+        android:src="@drawable/icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="217dp" />
+    <TextView
+        android:id="@+id/textEnterLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextStyle"
+
+        android:text="@string/app_name"
+        app:layout_constraintTop_toBottomOf="@+id/logoView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="18dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/default_button_backgroud"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/login_btn"
+        app:layout_constraintTop_toBottomOf="@+id/textEnterLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

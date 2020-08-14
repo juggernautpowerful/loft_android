@@ -10,4 +10,5 @@
     <color name="expenseColor">#4a90e2</color>
     <color name="incomeColor">#7ed321</color>
     <color name="inactiveColor">#eaeaea</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -7,9 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     >
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipe_refresh">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/budget_item_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
