@@ -205,6 +205,7 @@ public class BudgetFragment extends Fragment implements  ItemsSelectionListener,
                             items.add(Item.getInstance(moneyItem));
                         }
                         mAdapter.addItems(items);
+                        mAdapter.notifyDataSetChanged();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -76,13 +76,8 @@ public class BalanceFragment extends Fragment {
 
         String token =  ((LoftApp) getActivity().getApplication()).getSharedPreferences(getString(R.string.app_name), 0).getString(LoftApp.TOKEN_KEY, "");
 
-
-            singleIncome  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"expense");
-
-            singleExpense  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"income");
-
-
-
+        singleIncome  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"income");
+        singleExpense  =((LoftApp) getActivity().getApplication()).getApi().getItems(token,"expense");
 
         Disposable disposable = singleIncome
                 .subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())

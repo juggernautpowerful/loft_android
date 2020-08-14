@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FloatingActionButton addItemBtn = findViewById(R.id.call_add_item_activity);
+
         tabLayout = findViewById(R.id.tabs);
         toolbar = findViewById(R.id.toolbar);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.expences));
@@ -33,7 +35,30 @@ public class MainActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new BudgetPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
 
-        FloatingActionButton addItemBtn = findViewById(R.id.call_add_item_activity);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 2) {
+                    addItemBtn.hide();
+                } else {
+                    addItemBtn.show();
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

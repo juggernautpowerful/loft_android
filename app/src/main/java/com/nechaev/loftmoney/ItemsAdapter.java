@@ -69,6 +69,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
+    public void DataRefresh(){
+        notifyDataSetChanged();
+    }
+
     public int getSelectedSize() {
         int result = 0;
         for (int i = 0; i < itemList.size(); i++) {

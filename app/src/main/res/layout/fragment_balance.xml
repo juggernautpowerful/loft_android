@@ -86,7 +86,7 @@
                         android:textSize="24sp"
                         android:fontFamily="sans-serif-medium"
                         android:textStyle="normal"
-                        android:textColor="@color/textColorPrimary"
+                        android:textColor="@color/editText_name_textColor"
                         android:gravity="end"
                         tools:text="5400₽"
                         />

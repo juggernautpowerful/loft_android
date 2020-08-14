@@ -45,7 +45,7 @@ public class BalancePie extends View {
     }
 
     public void init() {
-        expencePaint.setColor(ContextCompat.getColor(getContext(), R.color.dark_gray_blue));
+        expencePaint.setColor(ContextCompat.getColor(getContext(), R.color.editText_name_textColor));
         incomePaint.setColor(ContextCompat.getColor(getContext(), R.color.apple_green));
 
     }
