@@ -72,6 +72,12 @@ public class BalanceFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadBalance();
+    }
+
     private void loadBalance(){
         final List<Item> items = new ArrayList<>();
         Single<List<MoneyItem>> singleIncome;
