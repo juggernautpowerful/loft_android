@@ -1,12 +1,10 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -18,16 +16,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.nechaev.loftmoney.data.Item;
+import com.nechaev.loftmoney.LoftApp;
+import com.nechaev.loftmoney.data.MoneyItem;
+import com.nechaev.loftmoney.R;
+import com.nechaev.loftmoney.data.Status;
+import com.nechaev.loftmoney.activities.helpers.ItemsAdapter;
+import com.nechaev.loftmoney.activities.helpers.ItemsSelectionListener;
+import com.nechaev.loftmoney.activities.helpers.SimpleDividerItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BudgetFragment extends Fragment implements  ItemsSelectionListener, ActionMode.Callback{
+public class BudgetFragment extends Fragment implements ItemsSelectionListener, ActionMode.Callback{
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public BudgetFragment(Boolean isExpense) {
@@ -76,7 +81,7 @@ public class BudgetFragment extends Fragment implements  ItemsSelectionListener,
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
 
-        loadItems();
+        //loadItems();
         return view;
     }
 
@@ -91,7 +96,7 @@ public class BudgetFragment extends Fragment implements  ItemsSelectionListener,
             price = 0;
         }
         if (requestCode == ADD_ITEM_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            loadItems();
+            //loadItems();
         }
     }
 
@@ -101,6 +106,12 @@ public class BudgetFragment extends Fragment implements  ItemsSelectionListener,
         if (mActionMode != null) {
             mActionMode.setTitle(getString(R.string.selected, String.valueOf(mAdapter.getSelectedSize())));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadItems();
     }
 
     @Override

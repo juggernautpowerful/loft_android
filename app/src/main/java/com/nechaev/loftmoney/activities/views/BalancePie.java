@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +8,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
+import com.nechaev.loftmoney.R;
 
 public class BalancePie extends View {
     private float mExpences;

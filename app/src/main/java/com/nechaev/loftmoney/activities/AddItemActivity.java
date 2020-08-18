@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.nechaev.loftmoney.LoftApp;
+import com.nechaev.loftmoney.R;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

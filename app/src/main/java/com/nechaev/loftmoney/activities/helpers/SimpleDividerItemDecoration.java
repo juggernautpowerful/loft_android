@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities.helpers;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nechaev.loftmoney.R;
 
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
 

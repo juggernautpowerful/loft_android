@@ -3,6 +3,9 @@ package com.nechaev.loftmoney;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.nechaev.loftmoney.api.Api;
+import com.nechaev.loftmoney.api.AuthApi;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

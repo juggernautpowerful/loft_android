@@ -1,4 +1,6 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.api;
+
+import com.nechaev.loftmoney.data.AuthResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

@@ -1,4 +1,6 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.data;
+
+import com.nechaev.loftmoney.R;
 
 public class Item {
     private Integer id;

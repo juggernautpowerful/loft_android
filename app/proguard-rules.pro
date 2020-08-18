@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.nechaev.loftmoney.MoneyItem {*;}
--keep class com.nechaev.loftmoney.Status {*;}
--keep class com.nechaev.loftmoney.AuthResponse {*;}
+-keep class com.nechaev.loftmoney.data.MoneyItem {*;}
+-keep class com.nechaev.loftmoney.data.Status {*;}
+-keep class com.nechaev.loftmoney.data.AuthResponse {*;}

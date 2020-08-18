@@ -1,6 +1,7 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.data;
 
 import com.google.gson.annotations.SerializedName;
+import com.nechaev.loftmoney.data.MoneyItem;
 
 import java.util.List;
 

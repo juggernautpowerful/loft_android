@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities.helpers;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nechaev.loftmoney.data.Item;
+import com.nechaev.loftmoney.R;
 
 import java.util.ArrayList;
 import java.util.List;

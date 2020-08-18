@@ -137,7 +137,7 @@
                 android:layout_height="1dp"
                 android:background="@color/inactiveColor"/>
 
-            <com.nechaev.loftmoney.BalancePie
+            <com.nechaev.loftmoney.activities.views.BalancePie
                 android:id="@+id/diagram_view"
                 android:layout_marginTop="36dp"
                 android:layout_marginBottom="56dp"

@@ -1,9 +1,14 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.nechaev.loftmoney.LoftApp;
+import com.nechaev.loftmoney.R;
+import com.nechaev.loftmoney.activities.LogonActivity;
+import com.nechaev.loftmoney.activities.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.activities;
 
 import android.os.Bundle;
 
@@ -10,6 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.nechaev.loftmoney.data.Item;
+import com.nechaev.loftmoney.LoftApp;
+import com.nechaev.loftmoney.data.MoneyItem;
+import com.nechaev.loftmoney.R;
+import com.nechaev.loftmoney.activities.views.BalancePie;
 
 import java.util.ArrayList;
 import java.util.List;

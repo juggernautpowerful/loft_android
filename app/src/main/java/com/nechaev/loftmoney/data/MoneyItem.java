@@ -1,4 +1,4 @@
-package com.nechaev.loftmoney;
+package com.nechaev.loftmoney.data;
 
 import com.google.gson.annotations.SerializedName;
 
